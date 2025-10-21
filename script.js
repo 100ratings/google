@@ -7,7 +7,7 @@ let cImgs = ["_img/cunt/01.jpg","_img/cunt/02.jpg","_img/cunt/03.jpg","_img/cunt
 
 let wImgs = ["https://artwow-images.s3.amazonaws.com/wanker-funny-tea-towel-by-adam-regester-teatowelmediumlandscape-62eaddb4000840.19161797.png","https://www.lovelayladesigns.co.uk/image/cache/catalog/product/RR010-800x800.jpg","http://cdn.ecommercedns.uk/files/3/214193/7/5196967/wanker---solid-black.jpg","https://www.shutterstock.com/image-photo/sign-saying-dont-be-wanker-260nw-2131770121.jpg","https://02dd5f64038d9e2d7aae-56d86e996af26366aec8b255ed6f7c7b.ssl.cf3.rackcdn.com/img-xwhQAbbw-large.jpg","https://i.ytimg.com/vi/4FekdX1b7B0/maxresdefault.jpg","https://www.scribbler.com/Images/Product/Default/xlarge/DM1667.jpg","https://bfv7pmf0.tinifycdn.com/images/fullsize/products/DMA-496.jpg","https://i.stack.imgur.com/nazTY.jpg"];
 
-let iImgs = ["https://womensprizeforfiction.co.uk/wp-content/uploads/The_Idiot_by_Elif_Batuman-ScreenRes.jpg","https://images-eu.ssl-images-amazon.com/images/I/81za5W0P3pL._AC_UL900_SR615,900_.jpg","https://flxt.tmsimg.com/assets/p22052756_b_v13_aa.jpg","https://i.scdn.co/image/ab67616d00001e0208a1b1e0674086d3f1995e1b","https://images.foyles.co.uk/xlarge/books/img/1/9/0/9781909269347.jpg","https://images.squarespace-cdn.com/content/v1/5c894a9d92441b651d911705/1556047789011-GRKOHWR55QEV53VRCPC3/I%27mRight-cover.png?format=1000w","https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781627938525/the-idiot-9781627938525_hr.jpg","https://thumbs.dreamstime.com/b/certified-idiot-sign-stamp-white-background-vector-illustration-certified-idiot-sign-stamp-191231448.jpg","https://i.ytimg.com/vi/RpXLpfMWrlY/maxresdefault.jpg"];
+let iImgs = ["http://gg0.nl/marklemon/01.jpg", "http://gg0.nl/marklemon/02.jpg", "http://gg0.nl/marklemon/03.jpg", "http://gg0.nl/marklemon/04.jpg", "http://gg0.nl/marklemon/05.jpg", "http://gg0.nl/marklemon/06.jpg", "http://gg0.nl/marklemon/07.jpg", "http://gg0.nl/marklemon/08.jpg", "http://gg0.nl/marklemon/09.jpg"];
 
 player.addEventListener('touchstart', shutterPress);
 player.addEventListener('click', shutterPress);
@@ -120,5 +120,6 @@ function loadImg(word) {
 			});
 		});
 }
+
 
 

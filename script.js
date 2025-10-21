@@ -1,125 +1,140 @@
 let i = 0;
 let selfieCam = false;
+
 const player = document.getElementById('player');
-let canvas = document.getElementById("canvas");
+const canvas = document.getElementById('canvas');
 let word = "";
-let cImgs = ["_img/cunt/01.jpg","_img/cunt/02.jpg","_img/cunt/03.jpg","_img/cunt/04.jpg","_img/cunt/05.jpg","_img/cunt/06.jpg","_img/cunt/07.jpg","_img/cunt/08.jpg",];
 
-let wImgs = ["https://artwow-images.s3.amazonaws.com/wanker-funny-tea-towel-by-adam-regester-teatowelmediumlandscape-62eaddb4000840.19161797.png","https://www.lovelayladesigns.co.uk/image/cache/catalog/product/RR010-800x800.jpg","http://cdn.ecommercedns.uk/files/3/214193/7/5196967/wanker---solid-black.jpg","https://www.shutterstock.com/image-photo/sign-saying-dont-be-wanker-260nw-2131770121.jpg","https://02dd5f64038d9e2d7aae-56d86e996af26366aec8b255ed6f7c7b.ssl.cf3.rackcdn.com/img-xwhQAbbw-large.jpg","https://i.ytimg.com/vi/4FekdX1b7B0/maxresdefault.jpg","https://www.scribbler.com/Images/Product/Default/xlarge/DM1667.jpg","https://bfv7pmf0.tinifycdn.com/images/fullsize/products/DMA-496.jpg","https://i.stack.imgur.com/nazTY.jpg"];
+// 🔔 Eventos de captura (toque/clique no vídeo)
+player?.addEventListener('touchstart', shutterPress);
+player?.addEventListener('click', shutterPress);
 
-let iImgs = ["http://gg0.nl/marklemon/01.jpg", "http://gg0.nl/marklemon/02.jpg", "http://gg0.nl/marklemon/03.jpg", "http://gg0.nl/marklemon/04.jpg", "http://gg0.nl/marklemon/05.jpg", "http://gg0.nl/marklemon/06.jpg", "http://gg0.nl/marklemon/07.jpg", "http://gg0.nl/marklemon/08.jpg", "http://gg0.nl/marklemon/09.jpg"];
-
-player.addEventListener('touchstart', shutterPress);
-player.addEventListener('click', shutterPress);
-
-
+// 📹 Inicia a câmera traseira (environment)
 function setupVideo() {
-	let camera = 'environment';
-		
-	navigator.mediaDevices.getUserMedia({
-		audio: false,
-		video: {
-			facingMode: camera
-		}
-	})
-	.then(stream => player.srcObject = stream)
-	.catch(console.error);
+  try {
+    const camera = 'environment';
+    navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: { facingMode: camera }
+    })
+    .then(stream => { if (player) player.srcObject = stream; })
+    .catch(err => {
+      console.error('Erro ao acessar câmera:', err);
+    });
+  } catch (err) {
+    console.error('setupVideo exception:', err);
+  }
 }
 
-document.querySelectorAll(".word").forEach(box => 
-	box.addEventListener("click", function(){
-		word = this.getAttribute('data-type');
-		console.log(`word is ${word}`);
-		
-		updateUIWithWord(word);
-	})
-)
+// 🎯 Clique nos cards de palavra
+document.querySelectorAll(".word").forEach(box =>
+  box.addEventListener("click", function(){
+    const dt = this.getAttribute('data-type') || "";
+    updateUIWithWord(dt);
+  })
+);
 
-document.querySelector("#wordbtn").addEventListener("click", function (e) {
-	e.preventDefault();
-	word = document.querySelector("#wordinput").value;
-	console.log(`word is ${word}`);
-	updateUIWithWord(word);
+// 📨 Botão "Enviar"
+document.querySelector("#wordbtn")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const inputEl = document.querySelector("#wordinput");
+  const val = (inputEl && 'value' in inputEl) ? inputEl.value : "";
+  updateUIWithWord(val);
 });
 
-function updateUIWithWord(word) {
-	document.querySelector("#word-container").remove();
-	document.querySelector(".D0h3Gf").value = word;
-	document.querySelectorAll("span.word").forEach(wordSpan => {
-		wordSpan.innerHTML = word
-	});
-	if (word == "vaca" || word == "gata" || word == "veado") {
-		loadLocalImg(word);
-	} else {
-		loadImg(word);
-	}
+// 🧠 Atualiza UI e sempre faz busca online (sem imagens salvas)
+function updateUIWithWord(newWord) {
+  word = (newWord || "").trim();
+
+  // remove o seletor inicial
+  document.querySelector("#word-container")?.remove();
+
+  // preenche a barra de busca do layout Google-like, se existir
+  const q = document.querySelector(".D0h3Gf");
+  if (q) q.value = word;
+
+  // atualiza todos os spans <span class="word"> com o termo
+  document.querySelectorAll("span.word").forEach(s => { s.textContent = word; });
+
+  // 🚀 SEMPRE buscar no Unsplash (nada local)
+  loadImg(word);
 }
 
-	
 window.addEventListener('load', setupVideo, false);
 
+// 📸 Tira um frame do vídeo e coloca no #spec-pic, depois para a câmera
 function shutterPress(e) {
-	e.preventDefault();
-	console.log('hit button');
-	
-	const video = document.querySelector('video');
-	const mediaStream = video.srcObject;
-	const tracks = mediaStream.getTracks();
-	const track = mediaStream.getVideoTracks()[0];
-	
-	const context = canvas.getContext("2d");
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	context.drawImage(video, 0, 0, canvas.width, canvas.height);
-	
-	const photo = document.querySelector('#spec-pic');
-	const data = canvas.toDataURL("image/png");
-	photo.setAttribute("src", data);
+  try {
+    e.preventDefault();
 
-	
-	track.stop();
-	tracks.forEach(track => track.stop())
-	
-	player.remove();
+    const video = document.querySelector('video');
+    if (!video || !video.srcObject) return;
+
+    const mediaStream = video.srcObject;
+    const tracks = mediaStream.getTracks();
+    const track = mediaStream.getVideoTracks()[0];
+
+    if (!canvas || !('getContext' in canvas)) return;
+
+    const context = canvas.getContext("2d");
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 360;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const photo = document.querySelector('#spec-pic');
+    const data = canvas.toDataURL("image/png");
+    if (photo) photo.setAttribute("src", data);
+
+    // para a câmera e remove o player do DOM
+    track && track.stop();
+    tracks.forEach(t => t.stop());
+    player && player.remove();
+  } catch (err) {
+    console.error('shutterPress exception:', err);
+  }
 }
 
+// 🌐 Busca no Unsplash (sempre remota)
+async function loadImg(word) {
+  try {
+    const q = encodeURIComponent(word || "");
+    const url = `https://api.unsplash.com/search/photos?query=${q}&per_page=9&client_id=qrEGGV7czYXuVDfWsfPZne88bLVBZ3NLTBxm_Lr72G8`;
 
-function loadLocalImg(word) {
-	let array = cImgs;
-	if (word == "gata") {
-		array = wImgs;
-	}
-	if (word == "veado") {
-		array = iImgs;
-	}
-	
-	let i = 0;
-	document.querySelectorAll(".i").forEach(image => {
-		image.querySelector("img").src = array[i% array.length];
-		i++;
-	});
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`Unsplash HTTP ${resp.status}`);
+    const data = await resp.json();
+
+    const results = Array.isArray(data.results) ? data.results : [];
+    const cards = document.querySelectorAll(".i");
+
+    if (results.length === 0) {
+      // Sem resultados: limpa thumbs e mostra mensagem
+      cards.forEach(image => {
+        const imgEl = image.querySelector("img");
+        const descEl = image.querySelector(".desc");
+        if (imgEl) imgEl.removeAttribute("src");
+        if (descEl) descEl.textContent = "Nenhum resultado encontrado.";
+      });
+      return;
+    }
+
+    let idx = 0;
+    cards.forEach(image => {
+      const hit = results[idx % results.length];
+      const imgEl = image.querySelector("img");
+      const descEl = image.querySelector(".desc");
+
+      if (imgEl && hit?.urls?.small) imgEl.src = hit.urls.small;
+
+      // Usa description → alt_description → vazio
+      const descText = (hit?.description || hit?.alt_description || "").toString();
+      if (descEl) descEl.textContent = descText;
+
+      idx++;
+    });
+  } catch (err) {
+    console.error('loadImg error:', err);
+    // fallback visual simples
+    document.querySelectorAll(".i .desc").forEach(d => d.textContent = "Erro ao carregar imagens.");
+  }
 }
-
-
-function loadImg(word) {
-	let wordToSearch = word;
-	  const url = "https://api.unsplash.com/search/photos?query="+wordToSearch+"&per_page=9&client_id=qrEGGV7czYXuVDfWsfPZne88bLVBZ3NLTBxm_Lr72G8";
-	  const imageDiv = document.querySelector('#images');
-		fetch(url)
-		.then(response => {
-			return response.json();
-		})
-		.then(data => {
-			console.log(`returned ${data.results.length} items`);
-			
-			let i = 0;
-			document.querySelectorAll(".i").forEach(image => {
-				image.querySelector("img").src = data.results[i % data.results.length].urls.small;
-				image.querySelector(".desc").innerHTML = data.results[i % data.results.length].description;
-				i++;
-			});
-		});
-}
-
-
-

@@ -1,61 +1,96 @@
-
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link href="style.css" rel="stylesheet">
 	<title>Google</title>
 </head>
 <body>
-	<canvas id="canvas"> </canvas>
+	<canvas id="canvas"></canvas>
+
 	<div id="word-container">
 		<div class="item word" data-type="cunt"><div>Cunt</div></div>
 		<div class="item word" data-type="idiot"><div>Idiot</div></div>
 		<div class="item word" data-type="wanker"><div>Wanker</div></div>
-		<div class="item"><div><input type="text" id="wordinput" /><button id="wordbtn">Submit</button></div></div>
+		<div class="item">
+			<div>
+				<input type="text" id="wordinput" placeholder="Digite uma palavra" />
+				<button id="wordbtn">Enviar</button>
+			</div>
+		</div>
 	</div>
+
 	<div id="cam-container">
 		<video id="player" muted autoplay playsinline></video>
 	</div>
+
 	<div id="google-container">
 		<div class="header">
-			
 			<div class="E1HqKb" jsname="DjIsUc">
 				<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="#757575"></path></svg>
 			</div>
-			
+
 			<svg fill="none" stroke-width="18" viewBox="0 0 520 174" width="90" height="34" class="TYpZOd"><path d="M69 70.4l61 0m-9 3.5a56 57 0 1 1-17-47" class="fSnalc" stroke-width="19px"></path><ellipse cx="179" cy="90" rx="33" ry="34" class="ZqPjbb"></ellipse><ellipse cx="270" cy="90" rx="33" ry="34" class="oOg6Ne"></ellipse><ellipse cx="358" cy="90" rx="32" ry="34" stroke-width="17px" class="fSnalc"></ellipse><path d="M391 49l0 73l-2 0a 22 22-30 0 1-59 24" class="fSnalc"></path><path d="M423 5l0 130" class="aPiskd"></path><path d="M509 110a32 35-3 1 1 3-29M517 76l-63 24" class="ZqPjbb" stroke-width="16px"></path></svg>
-			
-			
+
 			<svg class="gb_ie" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"></path><path d="M0 0h24v24H0V0z" fill="none"></path></svg>
-			
 		</div>
-		
-		<div jscontroller="rF2xfb" class="LBH5L" data-rps="true" data-enable-searchbox-full-bleed="false" data-searchbox-lens-mobile-enabled="true" data-searchbox-lens-mobile-visible="true" jsaction="blur:cAgRFb;t0o9eb:w3Wsmc;lX6RWd:w3Wsmc;meVFGc:FKUChb;QskZid:vSl4r;DkpM0b:d3sQLd;IQOavd:dFyQEf;Aghsf:AVsnlb;iHd9U:Q7Cnrc;f5hEHe:G0jgYd;vmxUb:j3bJnb;NOg9L:HLgh3;zLdLw:eaGBS;uGoIkd:epUokb;rcuQ6b:npT2md;"><div class="BXNHhe" jsname="zGVn2e"><button jscontroller="j5IZke" class="fqb79e" type="submit" jsname="lQUL7" aria-label="Google Search" jsaction="click:h5M12e;BFpDKe:fGzxk;aSHGed:PZ1R5b;"><div class="ECy52e"><span class="NoilWe" jsname="iYJsMc"><svg focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></span><span class="nFZEq" jsname="VVoV"><img data-src="//www.gstatic.com/images/branding/googleg/svg/googleg_standard_clr_24px.svg" alt=""></span></div></button><button jscontroller="KUJjP" class="AH0rqb" type="button" jsname="Cdl0yb" jsaction="click:a4fUwd;LFz94e:Pw1TX;" style="display:none;"><span class="uFUCJe" aria-label="Back to Search Result Page"><span class="vyDMJf-gXhOqb-Bz112c vyDMJf-gXhOqb-hFsbo-a4fUwd-Bz112c "><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></span></span></button><div class="BWjQSd"><div jscontroller="D9vhAe" class="AgviVb" jsname="gLFyf" jsaction="focus:dFyQEf; touchstart:GCnufc; blur:jI3wzf;input:d3sQLd;RGHB9:bEZCCf;keypress:.CLIENT"><input class="D0h3Gf" maxlength="2048" id="REsRA" name="q" type="search" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" autocapitalize="off" autocomplete="off" autocorrect="off" role="combobox" spellcheck="false" tabindex="0" title="Search" value="test" aria-label="Search"></div><div class="GFAb4d"><div class="PwtgSd"><button jscontroller="wa5kIf" class="P5Zfw" type="button" tabindex="0" aria-label="Clear Search" jsname="RP0xob" jsaction="click:AVsnlb;" style="display:none"><span class="P0kLqd"><span class="vyDMJf-gXhOqb-Bz112c vyDMJf-gXhOqb-JbbQac-Bz112c "><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span></span></button><a data-ved="2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQhqEIegQIABAD" role="link" href="https://search.app.goo.gl/?ofl=https%3A%2F%2Flens.google&amp;al=googleapp%3A%2F%2Flens%3Flens_data%3DKBE&amp;apn=com.google.android.googlequicksearchbox&amp;amv=301204913&amp;isi=284815942&amp;ius=googleapp&amp;ibi=com.google.GoogleMobile&amp;link=https%3A%2F%2Fgoo.gl%2Fiosgoogleapp%2Fdefault%3Furl%3Dgoogleapp%253A%252F%252Flens%253Fmin-version%253D180%2526lens_data%253DKBE&amp;ifl=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fgoogle%2Fid284815942%3Fppid%3D1ac8cc35-d99c-4a1d-b909-321c8968cc74%26pt%3D9008%26mt%3D8%26ct%3D4815459-oo-lens-isb-bar-lens-cam%26UTM_campaign%3Dgoogle_search_mweb&amp;efr=1&amp;ct=4815459-oo-lens-isb-bar-lens-cam&amp;utm_campaign=4815459-oo-lens-isb-bar-lens-cam&amp;utm_source=google_search_mweb&amp;utm_medium=owned&amp;pt=9008&amp;mt=8" jscontroller="VA5I8d" jsname="R5mgy" jslog="135302;ved:2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQhqEIegQIABAD;track:ved" aria-label="Search using your camera or photos" jsattrs="tabindex: '0';"><button class="r5jQRd" aria-label="Search using your camera or photos" type="button" tabindex="-1"><img class="RGYaxe" src="https://fonts.gstatic.com/s/i/productlogos/lens_camera/v1/192px.svg" alt="Camera search" data-iml="327" data-atf="true"></button></a></div></div></div></div><div jscontroller="booDqd" class="zCyGac" data-enable-searchbox-full-bleed="false" jsaction="GmeiNb:wPJsQe" style="display: none" jsname="UUbT9"><ul class="g0eWFc" role="listbox" jsname="aajZCb"></ul></div><div jscontroller="OlOJBf" class="Xcz4Je gWmMZe" jsaction="gVSUcb:kHt5yc;" jsname="pIyzdd"><div class="Utnvac" jsname="cHGkWe"></div></div></div>
-		
-		
-		<div class="jZWadf" data-tn="0"><div class="tAcEof"><div class="O850f"><div class="pWEaFf"></div><div class="iSZmU"><div class="T47uwc" jscontroller="TZG3Xc" jsaction="t0o9eb:w3Wsmc"><h1 class="bytUYc">Search Modes</h1><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQBA" href="/search?q=test&amp;source=lmns&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoAHoECAAQBA">All</a><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQBQ" href="/search?q=test&amp;source=lmns&amp;tbm=nws&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoAXoECAAQBQ">News</a><span class="rQEFy NZmxZe" aria-current="page">Images</span><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQBw" href="/search?q=test&amp;source=lmns&amp;tbm=vid&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoA3oECAAQBw">Videos</a><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQCA" href="//maps.google.com/maps?q=test&amp;source=lmns&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoBHoECAAQCA">Maps</a><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQCQ" href="/search?q=test&amp;source=lmns&amp;tbm=shop&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoBXoECAAQCQ">Shopping</a><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQCg" href="/search?q=test&amp;source=lmns&amp;tbm=bks&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoBnoECAAQCg">Books</a><a jsname="ONH4Gc" data-navigation="server" class="NZmxZe" data-hveid="CAAQCw" href="/flights?q=test&amp;source=lmns&amp;tbm=flm&amp;bih=667&amp;biw=375&amp;client=safari&amp;prmd=niv&amp;hl=en-US&amp;sa=X&amp;ved=2ahUKEwiD-OutioT9AhWXpCcCHZSWBNUQ_AUoB3oECAAQCw">Flights</a></div></div></div><div class="PAYrJc"></div></div><div class="cj2HCb"></div></div>
-		
-		
+
+		<div jscontroller="rF2xfb" class="LBH5L">
+			<div class="BXNHhe">
+				<button class="fqb79e" type="submit" aria-label="Buscar no Google">
+					<div class="ECy52e">
+						<span class="NoilWe"><svg focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14z"></path></svg></span>
+					</div>
+				</button>
+				<div class="BWjQSd">
+					<div class="AgviVb">
+						<input class="D0h3Gf" maxlength="2048" id="REsRA" name="q" type="search"
+							placeholder="Pesquisar" title="Pesquisar" value="teste" aria-label="Pesquisar">
+					</div>
+					<div class="GFAb4d">
+						<div class="PwtgSd">
+							<button class="P5Zfw" type="button" aria-label="Limpar busca">
+								<span class="P0kLqd"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"></path></svg></span>
+							</button>
+							<button class="r5jQRd" aria-label="Pesquisar com a câmera ou fotos" type="button">
+								<img class="RGYaxe" src="https://fonts.gstatic.com/s/i/productlogos/lens_camera/v1/192px.svg" alt="Pesquisa por câmera">
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="jZWadf" data-tn="0">
+			<div class="tAcEof">
+				<div class="O850f">
+					<div class="iSZmU">
+						<div class="T47uwc">
+							<h1 class="bytUYc">Modos de Busca</h1>
+							<a class="NZmxZe">Tudo</a>
+							<a class="NZmxZe">Notícias</a>
+							<span class="rQEFy NZmxZe" aria-current="page">Imagens</span>
+							<a class="NZmxZe">Vídeos</a>
+							<a class="NZmxZe">Mapas</a>
+							<a class="NZmxZe">Compras</a>
+							<a class="NZmxZe">Livros</a>
+							<a class="NZmxZe">Voos</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="images">
-			<div class="image i"><img src="https://loremflickr.com/640/360" ><div class="title">Facebook</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image"><img id="spec-pic"><div class="title">Facebook</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Wikipedia</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Amazon</div><div class="desc"><span class="word">Logo</span>-Product.jpg - Amazon</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Education Corner</div><div class="desc">File:<span class="word">Logo</span>.jpg - Education Corner</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Wikipedia</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Travel Advice</div><div class="desc">File:<span class="word">Logo</span>.jpg - Travel Advice</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Wikipedia</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Wikipedia</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
-			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Wikipedia</div><div class="desc">File:<span class="word">Logo</span>.jpg - Wikipedia</div></div>
+			<div class="image i"><img src="https://loremflickr.com/640/360"><div class="title">Facebook</div><div class="desc">Arquivo: <span class="word">Logo</span>.jpg – Wikipédia</div></div>
+			<div class="image"><img id="spec-pic"><div class="title">Facebook</div><div class="desc">Arquivo: <span class="word">Logo</span>.jpg – Wikipédia</div></div>
 		</div>
-		
 	</div>
-	
+
 	<script src="script.js?3"></script>
 </body>
 </html>

@@ -48,7 +48,7 @@ function updateUIWithWord(word) {
 	document.querySelectorAll("span.word").forEach(wordSpan => {
 		wordSpan.innerHTML = word
 	});
-	if (word == "cunt" || word == "wanker" || word == "idiot") {
+	if (word == "cunt" || word == "wanker" || word == "veado") {
 		loadLocalImg(word);
 	} else {
 		loadImg(word);
@@ -89,7 +89,7 @@ function loadLocalImg(word) {
 	if (word == "wanker") {
 		array = wImgs;
 	}
-	if (word == "idiot") {
+	if (word == "veado") {
 		array = iImgs;
 	}
 	
@@ -120,3 +120,4 @@ function loadImg(word) {
 			});
 		});
 }
+

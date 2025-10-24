@@ -372,4 +372,32 @@ input, button, .desc, .title, .D0h3Gf {
   padding: 0;
 }
 
+/* ===== Zoom UI (slider) ===== */
+#zoom-ui input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,#6CF 0%,#0CF 100%);
+  outline: none;
+}
+#zoom-ui input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid rgba(0,0,0,.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+#zoom-ui input[type="range"]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid rgba(0,0,0,.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+
+
+
 

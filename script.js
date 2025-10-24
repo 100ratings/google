@@ -1,63 +1,104 @@
 /* =========================
-   Camera-in-card (portrait)
+   script.js — câmera em overlay externo (sem zoom, clique único, sem flash)
    ========================= */
 
-/* ---------- Estado ---------- */
+/* ---------- Estado/refs globais ---------- */
 let word = "";
-let readyToShoot = false;
-let openedAt = 0;
-const ARM_DELAY = 250; // evita disparo acidental em Android
+let specImg;           // <img id="spec-pic">
+let placeholderDiv;    // div preto no lugar da imagem enquanto a câmera está aberta
 
-// Refs dinâmicas
-let player;      // <video> (preview)
-let canvas;      // <canvas> (captura)
-let specImg;     // <img id="spec-pic">
-let camSlot;     // wrapper do preview no card central
+// Câmera em overlay
+let overlay;           // container fixo fora do grid
+let player;            // <video> preview
+let canvas;            // <canvas> captura
 
-/* ---------- Util ---------- */
-function forceReflow(el){ void el.offsetHeight; }
+// Controle de prontidão/captura
+let streamReady = false;
+let pendingShot = false;   // toque antes da câmera pronta → captura assim que ficar pronta
+let shotDone = false;      // garante clique único
+
+/* ---------- Utils ---------- */
+function forceReflow(el){ void el?.offsetHeight; }
 function isCameraOpen(){ return !!(player && player.srcObject); }
 
-/* ---------- helper: truncar descrições (máx. 30 chars) ---------- */
+/* Trunca texto de descrição das imagens */
 function truncateText(str, max = 30) {
   const arr = Array.from((str || '').trim());
   return arr.length > max ? arr.slice(0, max - 1).join('') + '…' : arr.join('');
 }
 
-/* ---------- Slot da câmera dentro do card central ---------- */
-function ensureCameraSlot(){
+/* ---------- Placeholder preto no card da foto ---------- */
+function ensureSpecPlaceholder() {
   specImg = specImg || document.querySelector('#spec-pic');
-  if (!specImg) return null;
+  if (!specImg) return;
 
-  // Se já existe, reutiliza
-  camSlot = camSlot || specImg.parentElement.querySelector('#cam-slot');
-  if (camSlot) return camSlot;
+  // se já existir, mantém
+  placeholderDiv = specImg.parentElement.querySelector('#spec-placeholder');
+  if (placeholderDiv) return;
 
-  // Contêiner 3:4 para o preview
-  camSlot = document.createElement('div');
-  camSlot.id = 'cam-slot';
-  Object.assign(camSlot.style, {
-    position: 'relative',
+  const container = specImg.parentElement;
+  const w = container?.clientWidth || specImg.clientWidth || 320;
+  const h = Math.round(w * 4 / 3); // 3:4 (portrait) — altura maior
+
+  placeholderDiv = document.createElement('div');
+  placeholderDiv.id = 'spec-placeholder';
+  Object.assign(placeholderDiv.style, {
     width: '100%',
-    borderRadius: '12px',
-    overflow: 'hidden',
+    height: `${h}px`,      // altura já correta, sem “telinha pequena”
+    aspectRatio: '3 / 4',  // ajuda em redimensionamentos
     background: 'black',
-    aspectRatio: '3 / 4'
+    borderRadius: getComputedStyle(specImg).borderRadius || '12px',
+    display: 'block'
   });
 
-  // Fallback caso aspect-ratio não seja suportado
-  const fixSize = () => {
-    const w = camSlot.clientWidth;
-    if (w > 0 && getComputedStyle(camSlot).aspectRatio === 'auto') {
-      camSlot.style.height = Math.round(w * 4 / 3) + 'px';
-    } else {
-      camSlot.style.height = '';
-    }
-  };
-  new ResizeObserver(fixSize).observe(camSlot);
-  setTimeout(fixSize, 0);
+  // garante que a imagem ocupará exatamente o mesmo espaço depois
+  Object.assign(specImg.style, {
+    width: '100%',
+    height: 'auto',
+    aspectRatio: '3 / 4',
+    objectFit: 'cover',
+    display: 'none'
+  });
 
-  // <video> preview
+  container.insertBefore(placeholderDiv, specImg.nextSibling);
+}
+
+/* ---------- Overlay da câmera (fora do div) ---------- */
+function ensureOverlay() {
+  if (overlay) return overlay;
+
+  overlay = document.createElement('div');
+  overlay.id = 'camera-overlay';
+  Object.assign(overlay.style, {
+    position: 'fixed',
+    inset: '0',
+    display: 'none',                 // oculto até a câmera estar pronta
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    background: 'rgba(0,0,0,.55)',
+    zIndex: '9999',
+    touchAction: 'none'
+  });
+
+  // Moldura do preview (tamanho fixo, evita saltos)
+  const frame = document.createElement('div');
+  frame.id = 'camera-frame';
+  Object.assign(frame.style, {
+    position: 'relative',
+    width: '88vw',
+    maxWidth: '720px',
+    height: 'calc(88vw * 1.3333)',  // altura fixa 4:3 — evita salto visual
+    maxHeight: '82vh',
+    background: '#000',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    boxShadow: '0 10px 30px rgba(0,0,0,.5)',
+    transition: 'none',
+    willChange: 'transform'
+  });
+
+  // <video>
   player = document.createElement('video');
   player.id = 'player';
   player.setAttribute('playsinline', '');
@@ -69,31 +110,43 @@ function ensureCameraSlot(){
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    background: 'black',
-    display: 'none'
+    transformOrigin: '50% 50%',
+    cursor: 'pointer'
   });
 
-  // Canvas para capturar frame
+  // Canvas oculto
   canvas = document.createElement('canvas');
   canvas.id = 'canvas';
   canvas.style.display = 'none';
 
-  // 🔁 INSERE **DEPOIS** do #spec-pic — mesma posição visual do card
-  const parent = specImg.parentElement;
-  parent.insertBefore(camSlot, specImg.nextSibling);
-  camSlot.appendChild(player);
-  camSlot.appendChild(canvas);
+  frame.appendChild(player);
+  frame.appendChild(canvas);
+  overlay.appendChild(frame);
+  document.body.appendChild(overlay);
 
-  // Clique direto no preview também dispara
-  player.addEventListener('click', shutterPress, { passive:false });
+  // Um ÚNICO listener (pointerdown é mais rápido)
+  overlay.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (shotDone) return;                 
+    if (!streamReady) {                   
+      pendingShot = true;                 
+      return;
+    }
+    shutterPress();
+  }, { passive:false });
 
-  return camSlot;
+  return overlay;
 }
 
-/* ---------- Abrir/fechar câmera no card ---------- */
-async function openCameraInCard(){
-  ensureCameraSlot();
-  if (!player) return;
+/* ---------- Abrir/fechar câmera ---------- */
+async function openCameraOverlay(){
+  streamReady = false;
+  pendingShot = false;
+  shotDone = false;
+
+  ensureSpecPlaceholder();
+  ensureOverlay();
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -102,85 +155,94 @@ async function openCameraInCard(){
     });
 
     player.srcObject = stream;
-    player.onloadedmetadata = () => {
-      player.play().catch(()=>{});
-      // Mostra preview e esconde a imagem
-      player.style.display = 'block';
-      if (specImg) specImg.style.display = 'none';
 
-      openedAt = performance.now();
-      readyToShoot = false;
-      setTimeout(() => { readyToShoot = true; }, ARM_DELAY);
+    player.onloadedmetadata = () => {
+      const waitReady = () => {
+        if (player.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA && player.videoWidth > 0) {
+          player.play().catch(()=>{});
+          streamReady = true;
+          overlay.style.display = 'flex';       // só mostra depois de pronta
+          if (pendingShot && !shotDone) {
+            pendingShot = false;
+            requestAnimationFrame(() => shutterPress());
+          }
+        } else {
+          requestAnimationFrame(waitReady);
+        }
+      };
+      waitReady();
     };
   } catch (err) {
     console.error('Erro ao acessar câmera:', err);
     alert('⚠️ Permita o acesso à câmera para continuar.');
+    closeCameraOverlay();
   }
 }
 
-function closeCameraInCard(){
-  if (player && player.srcObject) {
-    try { player.srcObject.getTracks().forEach(t => t.stop()); } catch(e){}
-    player.srcObject = null;
-  }
-  if (player) player.style.display = 'none';
+function closeCameraOverlay(){
+  try {
+    if (player && player.srcObject) {
+      player.srcObject.getTracks().forEach(t => t.stop());
+    }
+  } catch(_) {}
 
-  // ✅ Remove o slot para não deixar “quadrado preto”
-  if (camSlot && camSlot.parentElement) camSlot.parentElement.removeChild(camSlot);
-  camSlot = null;
+  if (overlay && overlay.parentElement) overlay.parentElement.removeChild(overlay);
+  overlay = null;
   player = null;
   canvas = null;
-
-  // Mostra a foto no MESMO lugar onde estava o preview
-  if (specImg) specImg.style.display = '';
 }
 
-/* ---------- Capturar foto ---------- */
-async function shutterPress(e){
-  if (e) { e.preventDefault?.(); e.stopPropagation?.(); }
+/* ---------- Captura ---------- */
+async function shutterPress(){
+  if (shotDone) return;
+  if (!player || !player.srcObject || !streamReady) return;
 
-  // Anti-ghost: ignora toques muito cedo após abrir a câmera
-  const now = performance.now();
-  if (!readyToShoot || (now - openedAt) < ARM_DELAY) return;
+  shotDone = true;
 
-  if (!player || !player.srcObject) return;
-  if (!canvas || !specImg) return;
+  if (!specImg) specImg = document.querySelector('#spec-pic');
 
   const vw = player.videoWidth || 640;
   const vh = player.videoHeight || 480;
 
-  // Mantém proporção + leve downscale para performance em Android
-  const maxW = 800;
-  const scale = Math.min(1, maxW / vw);
-  canvas.width  = Math.max(1, Math.floor(vw * scale));
-  canvas.height = Math.max(1, Math.floor(vh * scale));
-
-  const ctx = canvas.getContext('2d');
+  if (!canvas) canvas = document.createElement('canvas');
+  canvas.width  = vw;
+  canvas.height = vh;
+  const ctx = canvas.getContext('2d', { willReadFrequently: false });
   ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
 
-  // Blob → ObjectURL (rápido)
-  canvas.toBlob(async (blob) => {
-    if (!blob) {
-      const data = canvas.toDataURL('image/jpeg', 0.9);
-      specImg.src = data;
+  const done = async (blob) => {
+    if (!specImg) return;
+
+    if (blob) {
+      const url = URL.createObjectURL(blob);
+      specImg.src = url;
       try { await specImg.decode?.(); } catch(_){}
-      forceReflow(specImg);
-      closeCameraInCard();
-      return;
+      try { URL.revokeObjectURL(url); } catch(_){}
+    } else {
+      specImg.src = canvas.toDataURL('image/jpeg', 0.9);
+      try { await specImg.decode?.(); } catch(_){}
     }
 
-    const url = URL.createObjectURL(blob);
-    specImg.src = url;
-    try { await specImg.decode?.(); } catch(_){}
-    forceReflow(specImg);
-    try { URL.revokeObjectURL(url); } catch(_){}
+    // mantém proporção e substitui o placeholder suavemente
+    specImg.style.width = '100%';
+    specImg.style.height = 'auto';
+    specImg.style.aspectRatio = '3 / 4';
+    specImg.style.display = '';
+    if (placeholderDiv && placeholderDiv.parentElement) {
+      placeholderDiv.parentElement.removeChild(placeholderDiv);
+    }
+    placeholderDiv = null;
+    closeCameraOverlay();
+  };
 
-    // Troca preview → foto e remove o slot
-    closeCameraInCard();
-  }, 'image/webp', 0.85);
+  if (canvas.toBlob) {
+    canvas.toBlob((blob) => { done(blob); }, 'image/webp', 0.85);
+  } else {
+    await done(null);
+  }
 }
 
-/* ---------- Busca de imagens ---------- */
+/* ---------- Busca de imagens (mantido) ---------- */
 function isAnimalIntent(term) {
   if (!term) return false;
   const t = term.toLowerCase().trim();
@@ -197,18 +259,14 @@ function isAnimalIntent(term) {
 
 async function loadImg(word) {
   try {
-    // 🔎 termo normalizado + intenção animal
     let searchTerm = (word || "").toLowerCase().trim();
     const wantsAnimal = isAnimalIntent(searchTerm);
 
-    // 🐱 LAPIDAÇÃO: forçar “gato/gata” como felino doméstico
     if (["gato", "gata", "gatinho", "gatinha"].includes(searchTerm)) {
       searchTerm = "gato de estimação, gato doméstico, cat pet";
     }
 
     const q = encodeURIComponent(searchTerm);
-
-    // 1) Pixabay (prioritário)
     const pixParams = new URLSearchParams({
       key: "24220239-4d410d9f3a9a7e31fe736ff62",
       q,
@@ -219,8 +277,7 @@ async function loadImg(word) {
     });
     if (wantsAnimal) pixParams.set("category", "animals");
 
-    const pixabayURL = `https://pixabay.com/api/?${pixParams.toString()}`;
-    const pixResp = await fetch(pixabayURL);
+    const pixResp = await fetch(`https://pixabay.com/api/?${pixParams.toString()}`);
     let results = [];
     if (pixResp.ok) {
       const data = await pixResp.json();
@@ -231,15 +288,13 @@ async function loadImg(word) {
       }
     }
 
-    // 2) Fallback Unsplash
     if (!results.length) {
       const unsplashQuery = wantsAnimal ? `${q}+animal` : q;
-      const unsplashURL =
-        `https://api.unsplash.com/search/photos?query=${unsplashQuery}&per_page=9&content_filter=high&client_id=qrEGGV7czYXuVDfWsfPZne88bLVBZ3NLTBxm_Lr72G8`;
-      const unsplashResp = await fetch(unsplashURL);
-      if (unsplashResp.ok) {
-        const unsplashData = await unsplashResp.json();
-        const uResults = Array.isArray(unsplashData.results) ? unsplashData.results : [];
+      const u = `https://api.unsplash.com/search/photos?query=${unsplashQuery}&per_page=9&content_filter=high&client_id=qrEGGV7czYXuVDfWsfPZne88bLVBZ3NLTBxm_Lr72G8`;
+      const us = await fetch(u);
+      if (us.ok) {
+        const d = await us.json();
+        const uResults = Array.isArray(d.results) ? d.results : [];
         results = uResults.map(r => ({
           webformatURL: r?.urls?.small,
           tags: (r?.description || r?.alt_description || "").toString(),
@@ -248,7 +303,6 @@ async function loadImg(word) {
       }
     }
 
-    // Preenche os cards .i com as imagens
     const cards = document.querySelectorAll('.i');
     if (!results.length) {
       cards.forEach(image => {
@@ -269,9 +323,7 @@ async function loadImg(word) {
       if (imgEl && hit?.webformatURL) imgEl.src = hit.webformatURL;
 
       let descText = (hit?.tags || hit?.user || '').toString();
-      // Normaliza vírgulas e espaços excessivos
       descText = descText.replace(/\s*,\s*/g, ', ').replace(/\s{2,}/g, ' ');
-      // Limita a 30 caracteres + reticências
       const short = truncateText(descText, 30);
 
       if (descEl) descEl.textContent = short;
@@ -283,49 +335,26 @@ async function loadImg(word) {
   }
 }
 
-/* ---------- Clique global para disparo em qualquer lugar ---------- */
-function globalShutterClick(e){
-  if (!isCameraOpen()) return;     // sem câmera → não intercepta
-  e.preventDefault();
-  e.stopPropagation();
-  shutterPress(e);
-}
-function globalShutterTouch(e){
-  if (!isCameraOpen()) return;
-  e.preventDefault();
-  e.stopPropagation();
-  shutterPress(e);
-}
-
-/* ---------- UI / Busca ---------- */
+/* ---------- UI / fluxo ---------- */
 function updateUIWithWord(newWord) {
   word = (newWord || '').trim();
-
-  // remove o seletor inicial (se existir)
   document.querySelector('#word-container')?.remove();
-
-  // Preenche a “barra de busca” fake, se existir
   const q = document.querySelector('.D0h3Gf');
   if (q) q.value = word;
-
-  // Atualiza todos os <span class="word">
   document.querySelectorAll('span.word').forEach(s => { s.textContent = word; });
-
-  // Carrega as imagens (Pixabay → Unsplash)
   loadImg(word);
-
-  // Abre a câmera no card central
-  openCameraInCard();
+  openCameraOverlay();
 }
 
 function bindWordCards(){
-  document.querySelectorAll('.word').forEach(box => {
-    box.addEventListener('click', function(e){
+  document.querySelectorAll('#word-container .item.word').forEach(box => {
+    const onPick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const dt = this.getAttribute('data-type') || '';
+      const dt = box.getAttribute('data-type') || '';
       updateUIWithWord(dt);
-    }, { passive:false });
+    };
+    box.addEventListener('pointerdown', onPick, { passive:false });
   });
 }
 
@@ -340,18 +369,9 @@ function bindSendButton(){
 
 /* ---------- Inicialização ---------- */
 function init(){
-  // Garantir refs da imagem central
   specImg = document.querySelector('#spec-pic');
-
-  bindWordCards();   // eventos nos cards “vaca/veado/gata” etc.
-  bindSendButton();  // evento no botão Enviar
-
-  // Clique global (captura toque/clique em qualquer lugar da tela falsa)
-  document.addEventListener('click', globalShutterClick, { capture:true, passive:false });
-  document.addEventListener('touchstart', globalShutterTouch, { capture:true, passive:false });
-
-  // (Opcional) Abrir a câmera ao carregar:
-  // ensureCameraSlot(); openCameraInCard();
+  bindWordCards();
+  bindSendButton();
 }
 
 window.addEventListener('load', init, false);

@@ -17,6 +17,51 @@ let streamReady = false;
 let pendingShot = false;   // toque antes da câmera pronta → captura assim que ficar pronta
 let shotDone = false;      // garante clique único
 
+/* ---------- Imagens locais com legendas personalizadas ---------- */
+// Use { src, caption }. Se alguma entrada for string, vira {src, caption:""} via helper.
+const STATIC_IMAGES = {
+veado: [
+  { src: "https://gg0.nl/insulto/veado/ArtStation.jpg",  caption: "veado, cervo, animal, natureza, wild" },
+  { src: "https://gg0.nl/insulto/veado/DevianArt.jpg",   caption: "cervo, animal, pet, sweet, natureza" },
+  { src: "https://gg0.nl/insulto/veado/Freepik1.jpg",    caption: "veado, cervídeo, animal, wild, cute" },
+  { src: "https://gg0.nl/insulto/veado/Freepik2.jpg",    caption: "animal, cervo, natureza, fofura, pet" },
+  { src: "https://gg0.nl/insulto/veado/Pexels.jpg",      caption: "cervo, animal, natural, sweet, calm" },
+  { src: "https://gg0.nl/insulto/veado/Pinterest1.jpg",  caption: "veado, fofura, natureza, cervo, wild" },
+  { src: "https://gg0.nl/insulto/veado/Pinterest2.jpg",  caption: "cervo, wild, cute, natureza, sweet" },
+  { src: "https://gg0.nl/insulto/veado/Pixabay.jpg",     caption: "animal, veado, cervo, wild, nature" },
+  { src: "https://gg0.nl/insulto/veado/Rawpixel.jpg",    caption: "cervo, animal, sweet, wild, calm" }
+],
+gata: [
+  { src: "https://gg0.nl/insulto/gata/ArtStation.jpg",   caption: "gata, felina, pet, animal, fofura" },
+  { src: "https://gg0.nl/insulto/gata/DevianArt.jpg",    caption: "gato, felino, brincar, carinho, pet" },
+  { src: "https://gg0.nl/insulto/gata/Freepik1.jpg",     caption: "gatinha, felina, animal, doce, cute" },
+  { src: "https://gg0.nl/insulto/gata/Freepik2.jpg",     caption: "gato, pet, fofura, felino, miado" },
+  { src: "https://gg0.nl/insulto/gata/Pexels.jpg",       caption: "gatinho, animal, amor, carinho, pet" },
+  { src: "https://gg0.nl/insulto/gata/Pinterest1.jpg",   caption: "felina, fofura, gato, pet, brincar" },
+  { src: "https://gg0.nl/insulto/gata/Pinterest2.jpg",   caption: "cat, cute, feline, pet, sweet, love" },
+  { src: "https://gg0.nl/insulto/gata/Pixabay.jpg",      caption: "felino, pet, animal, cute, adorable" },
+  { src: "https://gg0.nl/insulto/gata/Rawpixel.jpg",     caption: "gato, animal, fofura, carinho, pet" }
+],
+vaca: [
+  { src: "https://gg0.nl/insulto/vaca/ArtStation.jpg",   caption: "vaca, bovina, animal, pet, fofura" },
+  { src: "https://gg0.nl/insulto/vaca/DevianArt.jpg",    caption: "bovino, doce, animal, cute, gentle" },
+  { src: "https://gg0.nl/insulto/vaca/Freepik1.jpg",     caption: "vaca, gado, animal, calm, sweet" },
+  { src: "https://gg0.nl/insulto/vaca/Freepik2.jpg",     caption: "bovina, pet, animal, wild, love" },
+  { src: "https://gg0.nl/insulto/vaca/Pexels.jpg",       caption: "animal, vaca, gentle, cute, pet" },
+  { src: "https://gg0.nl/insulto/vaca/Pinterest1.jpg",   caption: "vaca, fofura, bovina, sweet, love" },
+  { src: "https://gg0.nl/insulto/vaca/Pinterest2.jpg",   caption: "cow, cute, pet, sweet, gentle" },
+  { src: "https://gg0.nl/insulto/vaca/Pixabay.jpg",      caption: "animal, vaca, pet, bovina, calm" },
+  { src: "https://gg0.nl/insulto/vaca/Rawpixel.jpg",     caption: "vaca, animal, sweet, pet, love" }
+]
+};
+
+/* Fallback de tags por palavra (se algum item não tiver caption) */
+const DEFAULT_STATIC_TAGS = {
+  veado: "veado, cervo, natureza",
+  gata:  "gata, felino, doméstico",
+  vaca:  "vaca, bovino, fazenda"
+};
+
 /* ---------- Utils ---------- */
 function forceReflow(el){ void el?.offsetHeight; }
 function isCameraOpen(){ return !!(player && player.srcObject); }
@@ -25,6 +70,17 @@ function isCameraOpen(){ return !!(player && player.srcObject); }
 function truncateText(str, max = 30) {
   const arr = Array.from((str || '').trim());
   return arr.length > max ? arr.slice(0, max - 1).join('') + '…' : arr.join('');
+}
+
+/* Helpers para itens estáticos */
+function prettyFromFilename(url){
+  const file = (url.split('/').pop() || '').replace(/\.(jpe?g|png|webp)$/i, '');
+  return file.replace(/[_-]+/g, ' ');
+}
+function getStaticItems(word){
+  const list = STATIC_IMAGES[word] || [];
+  // compat: string -> { src, caption: "" }
+  return list.map(item => (typeof item === 'string') ? { src:item, caption:'' } : item);
 }
 
 /* ---------- Placeholder preto no card da foto ---------- */
@@ -242,7 +298,7 @@ async function shutterPress(){
   }
 }
 
-/* ---------- Busca de imagens (mantido) ---------- */
+/* ---------- Busca de imagens (mantido + atalho local) ---------- */
 function isAnimalIntent(term) {
   if (!term) return false;
   const t = term.toLowerCase().trim();
@@ -260,6 +316,29 @@ function isAnimalIntent(term) {
 async function loadImg(word) {
   try {
     let searchTerm = (word || "").toLowerCase().trim();
+
+    // 1) ATALHO LOCAL: usa imagens definidas e captions personalizadas
+    const localItems = getStaticItems(searchTerm);
+    if (localItems.length) {
+      const cards = document.querySelectorAll('.i'); // 9 cards laterais
+      cards.forEach((card, idx) => {
+        const { src, caption } = localItems[idx % localItems.length];
+        const imgEl  = card.querySelector('img');
+        const descEl = card.querySelector('.desc');
+
+        if (imgEl) imgEl.src = src;
+
+        // Prioridade: caption → fallback por palavra → nome de arquivo "bonitinho"
+        const text = (caption && caption.trim())
+          ? caption.trim()
+          : (DEFAULT_STATIC_TAGS[searchTerm] || prettyFromFilename(src));
+
+        if (descEl) descEl.textContent = truncateText(text, 30);
+      });
+      return; // não chama API
+    }
+
+    // 2) (SE não houver local) segue fluxo normal de APIs
     const wantsAnimal = isAnimalIntent(searchTerm);
 
     if (["gato", "gata", "gatinho", "gatinha"].includes(searchTerm)) {
@@ -375,4 +454,6 @@ function init(){
 }
 
 window.addEventListener('load', init, false);
+
+
 

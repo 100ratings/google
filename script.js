@@ -20,39 +20,39 @@ let shotDone = false;      // garante clique único
 /* ---------- Imagens locais com legendas personalizadas ---------- */
 // Use { src, caption }. Se alguma entrada for string, vira {src, caption:""} via helper.
 const STATIC_IMAGES = {
-veado: [
-  { src: "https://gg0.nl/insulto/veado/ArtStation.jpg",  caption: "veado, cervo, animal, natureza, wild" },
-  { src: "https://gg0.nl/insulto/veado/DevianArt.jpg",   caption: "cervo, animal, pet, sweet, natureza" },
-  { src: "https://gg0.nl/insulto/veado/Freepik1.jpg",    caption: "veado, cervídeo, animal, wild, cute" },
-  { src: "https://gg0.nl/insulto/veado/Freepik2.jpg",    caption: "animal, cervo, natureza, fofura, pet" },
-  { src: "https://gg0.nl/insulto/veado/Pexels.jpg",      caption: "cervo, animal, natural, sweet, calm" },
-  { src: "https://gg0.nl/insulto/veado/Pinterest1.jpg",  caption: "veado, fofura, natureza, cervo, wild" },
-  { src: "https://gg0.nl/insulto/veado/Pinterest2.jpg",  caption: "cervo, wild, cute, natureza, sweet" },
-  { src: "https://gg0.nl/insulto/veado/Pixabay.jpg",     caption: "animal, veado, cervo, wild, nature" },
-  { src: "https://gg0.nl/insulto/veado/Rawpixel.jpg",    caption: "cervo, animal, sweet, wild, calm" }
-],
-gata: [
-  { src: "https://gg0.nl/insulto/gata/ArtStation.jpg",   caption: "gata, felina, pet, animal, fofura" },
-  { src: "https://gg0.nl/insulto/gata/DevianArt.jpg",    caption: "gato, felino, brincar, carinho, pet" },
-  { src: "https://gg0.nl/insulto/gata/Freepik1.jpg",     caption: "gatinha, felina, animal, doce, cute" },
-  { src: "https://gg0.nl/insulto/gata/Freepik2.jpg",     caption: "gato, pet, fofura, felino, miado" },
-  { src: "https://gg0.nl/insulto/gata/Pexels.jpg",       caption: "gatinho, animal, amor, carinho, pet" },
-  { src: "https://gg0.nl/insulto/gata/Pinterest1.jpg",   caption: "felina, fofura, gato, pet, brincar" },
-  { src: "https://gg0.nl/insulto/gata/Pinterest2.jpg",   caption: "cat, cute, feline, pet, sweet, love" },
-  { src: "https://gg0.nl/insulto/gata/Pixabay.jpg",      caption: "felino, pet, animal, cute, adorable" },
-  { src: "https://gg0.nl/insulto/gata/Rawpixel.jpg",     caption: "gato, animal, fofura, carinho, pet" }
-],
-vaca: [
-  { src: "https://gg0.nl/insulto/vaca/ArtStation.jpg",   caption: "vaca, bovina, animal, pet, fofura" },
-  { src: "https://gg0.nl/insulto/vaca/DevianArt.jpg",    caption: "bovino, doce, animal, cute, gentle" },
-  { src: "https://gg0.nl/insulto/vaca/Freepik1.jpg",     caption: "vaca, gado, animal, calm, sweet" },
-  { src: "https://gg0.nl/insulto/vaca/Freepik2.jpg",     caption: "bovina, pet, animal, wild, love" },
-  { src: "https://gg0.nl/insulto/vaca/Pexels.jpg",       caption: "animal, vaca, gentle, cute, pet" },
-  { src: "https://gg0.nl/insulto/vaca/Pinterest1.jpg",   caption: "vaca, fofura, bovina, sweet, love" },
-  { src: "https://gg0.nl/insulto/vaca/Pinterest2.jpg",   caption: "cow, cute, pet, sweet, gentle" },
-  { src: "https://gg0.nl/insulto/vaca/Pixabay.jpg",      caption: "animal, vaca, pet, bovina, calm" },
-  { src: "https://gg0.nl/insulto/vaca/Rawpixel.jpg",     caption: "vaca, animal, sweet, pet, love" }
-]
+  veado: [
+    { src: "https://100ratings.github.io/google2/insulto/veado/01.jpg",  caption: "veado, cervo, animal, natureza, wild" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/02.jpg",   caption: "cervo, animal, pet, sweet, natureza" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/03.jpg",    caption: "veado, cervídeo, animal, wild, cute" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/04.jpg",    caption: "animal, cervo, natureza, fofura, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/05.jpg",      caption: "cervo, animal, natural, sweet, calm" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/06.jpg",  caption: "veado, fofura, natureza, cervo, wild" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/07.jpg",  caption: "cervo, wild, cute, natureza, sweet" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/08.jpg",     caption: "animal, veado, cervo, wild, nature" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/09.jpg",    caption: "cervo, animal, sweet, wild, calm" }
+  ],
+  gata: [
+    { src: "https://100ratings.github.io/google2/insulto/gata/01.jpg",   caption: "gata, felina, pet, animal, fofura" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/02.jpg",    caption: "gato, felino, brincar, carinho, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/03.jpg",     caption: "gatinha, felina, animal, doce, cute" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/04.jpg",     caption: "gato, pet, fofura, felino, miado" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/05.jpg",       caption: "gatinho, animal, amor, carinho, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/06.jpg",   caption: "felina, fofura, gato, pet, brincar" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/07.jpg",   caption: "cat, cute, feline, pet, sweet, love" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/08.jpg",      caption: "felino, pet, animal, cute, adorable" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/09.jpg",     caption: "gato, animal, fofura, carinho, pet" }
+  ],
+  vaca: [
+    { src: "https://100ratings.github.io/google2/insulto/vaca/01.jpg",   caption: "vaca, bovina, animal, pet, fofura" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/02.jpg",    caption: "bovino, doce, animal, cute, gentle" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/03.jpg",     caption: "vaca, gado, animal, calm, sweet" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/04.jpg",     caption: "bovina, pet, animal, wild, love" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/05.jpg",       caption: "animal, vaca, gentle, cute, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/06.jpg",   caption: "vaca, fofura, bovina, sweet, love" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/07.jpg",   caption: "cow, cute, pet, sweet, gentle" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/08.jpg",      caption: "animal, vaca, pet, bovina, calm" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/09.jpg",     caption: "vaca, animal, sweet, pet, love" }
+  ]
 };
 
 /* Fallback de tags por palavra (se algum item não tiver caption) */
@@ -81,6 +81,20 @@ function getStaticItems(word){
   const list = STATIC_IMAGES[word] || [];
   // compat: string -> { src, caption: "" }
   return list.map(item => (typeof item === 'string') ? { src:item, caption:'' } : item);
+}
+
+/* ---------- Cache leve + aquecimento on-demand ---------- */
+const IMG_CACHE = new Map();
+function warmCategory(cat, limit = 3) {
+  const list = getStaticItems(cat).slice(0, limit);
+  list.forEach(({ src }) => {
+    if (IMG_CACHE.has(src)) return;    // já aquecida
+    const im = new Image();
+    im.decoding = 'async';
+    im.loading  = 'eager';
+    im.src = src;                      // dispara download em background
+    IMG_CACHE.set(src, im);
+  });
 }
 
 /* ---------- Placeholder preto no card da foto ---------- */
@@ -320,18 +334,60 @@ async function loadImg(word) {
     // 1) ATALHO LOCAL: usa imagens definidas e captions personalizadas
     const localItems = getStaticItems(searchTerm);
     if (localItems.length) {
-      const cards = document.querySelectorAll('.i'); // 9 cards laterais
-      cards.forEach((card, idx) => {
-        const { src, caption } = localItems[idx % localItems.length];
+      // Mapa de "título do card" -> pista para achar no src (normaliza o 'DevianArt' vs 'DeviantArt', etc.)
+      const TITLE_HINT = {
+        pinterest: 'pinterest',
+        pexels: 'pexels',
+        artstation: 'artstation',
+        deviantart: 'devianart',
+        pixabay: 'pixabay',
+        freepik: 'freepik',
+        rawpixel: 'rawpixel',
+        unsplash: 'unsplash',   // não existe no array; cai no fallback sem repetir
+        stocksnap: 'stocksnap'  // idem
+      };
+
+      // Seleciona só os 9 cards laterais (.i) e pula o central (Facebook)
+      const cards = document.querySelectorAll('#images .image.i');
+
+      const used = new Set(); // garante que não repete imagem
+      let highPrioBudget = 2; // dois primeiros com prioridade alta
+      cards.forEach((card) => {
+        const title = (card.querySelector('.title')?.textContent || '').trim().toLowerCase();
+        const hint = TITLE_HINT[title] || title;
+
+        // 1) tenta casar pelo hint no src
+        let match = localItems.find(it => !used.has(it.src) && it.src.toLowerCase().includes(hint));
+
+        // 2) se não achar (ex.: Unsplash/StockSnap), pega a próxima não usada
+        if (!match) match = localItems.find(it => !used.has(it.src));
+
+        // 3) último recurso: usa o último item (ainda evita vazio)
+        if (!match) match = localItems[localItems.length - 1];
+
+        used.add(match.src);
+
         const imgEl  = card.querySelector('img');
         const descEl = card.querySelector('.desc');
 
-        if (imgEl) imgEl.src = src;
+        if (imgEl) {
+          // alta prioridade nos dois primeiros; demais ficam padrão
+          if (highPrioBudget > 0) {
+            imgEl.setAttribute('fetchpriority', 'high');
+            imgEl.loading  = 'eager';
+            highPrioBudget--;
+          } else {
+            imgEl.setAttribute('fetchpriority', 'auto');
+            imgEl.loading  = 'lazy';
+          }
+          imgEl.decoding = 'async';
+          imgEl.src = match.src; // navegador deve usar cache aquecido (se houver)
+        }
 
         // Prioridade: caption → fallback por palavra → nome de arquivo "bonitinho"
-        const text = (caption && caption.trim())
-          ? caption.trim()
-          : (DEFAULT_STATIC_TAGS[searchTerm] || prettyFromFilename(src));
+        const text = (match.caption && match.caption.trim())
+          ? match.caption.trim()
+          : (DEFAULT_STATIC_TAGS[searchTerm] || prettyFromFilename(match.src));
 
         if (descEl) descEl.textContent = truncateText(text, 30);
       });
@@ -352,7 +408,7 @@ async function loadImg(word) {
       lang: "pt",
       per_page: "9",
       image_type: "photo",
-      safesearch: "true"
+      safesafety: "true"
     });
     if (wantsAnimal) pixParams.set("category", "animals");
 
@@ -427,10 +483,17 @@ function updateUIWithWord(newWord) {
 
 function bindWordCards(){
   document.querySelectorAll('#word-container .item.word').forEach(box => {
+    const dt = box.getAttribute('data-type') || '';
+
+    // Aquecer 2–3 imagens da categoria ao detectar intenção (desktop e mobile)
+    const prime = () => warmCategory(dt, 3);
+    box.addEventListener('pointerenter', prime, { passive: true }); // hover (desktop)
+    box.addEventListener('touchstart',  prime, { passive: true });  // encostar (mobile)
+
+    // Clique: troca UI + abre câmera + popula cards
     const onPick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const dt = box.getAttribute('data-type') || '';
       updateUIWithWord(dt);
     };
     box.addEventListener('pointerdown', onPick, { passive:false });
@@ -454,6 +517,4 @@ function init(){
 }
 
 window.addEventListener('load', init, false);
-
-
 

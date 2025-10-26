@@ -501,11 +501,22 @@ function bindWordCards(){
 }
 
 function bindSendButton(){
-  document.querySelector('#wordbtn')?.addEventListener('click', function(e){
+  const inputEl = document.querySelector('#wordinput');
+  const btnEl = document.querySelector('#wordbtn');
+
+  // Clique no botão
+  btnEl?.addEventListener('click', (e) => {
     e.preventDefault();
-    const inputEl = document.querySelector('#wordinput');
-    const val = (inputEl && 'value' in inputEl) ? inputEl.value : '';
+    const val = (inputEl?.value || '').toLowerCase().trim();
     updateUIWithWord(val);
+  });
+
+  // Pressionar Enter/Retorno faz o mesmo
+  inputEl?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      btnEl?.click();
+    }
   });
 }
 
@@ -517,5 +528,6 @@ function init(){
 }
 
 window.addEventListener('load', init, false);
+
 
 

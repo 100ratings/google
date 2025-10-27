@@ -21,37 +21,37 @@ let shotDone = false;      // garante clique único
 // Use { src, caption }. Se alguma entrada for string, vira {src, caption:""} via helper.
 const STATIC_IMAGES = {
   veado: [
-    { src: "https://100ratings.github.io/google/insulto/veado/01.jpg",  caption: "veado, cervo, animal, natureza, wild" },
-    { src: "https://100ratings.github.io/google/insulto/veado/02.jpg",   caption: "cervo, animal, pet, sweet, natureza" },
-    { src: "https://100ratings.github.io/google/insulto/veado/03.jpg",    caption: "veado, cervídeo, animal, wild, cute" },
-    { src: "https://100ratings.github.io/google/insulto/veado/04.jpg",    caption: "animal, cervo, natureza, fofura, pet" },
-    { src: "https://100ratings.github.io/google/insulto/veado/05.jpg",      caption: "cervo, animal, natural, sweet, calm" },
-    { src: "https://100ratings.github.io/google/insulto/veado/06.jpg",  caption: "veado, fofura, natureza, cervo, wild" },
-    { src: "https://100ratings.github.io/google/insulto/veado/07.jpg",  caption: "cervo, wild, cute, natureza, sweet" },
-    { src: "https://100ratings.github.io/google/insulto/veado/08.jpg",     caption: "animal, veado, cervo, wild, nature" },
-    { src: "https://100ratings.github.io/google/insulto/veado/09.jpg",    caption: "cervo, animal, sweet, wild, calm" }
+    { src: "https://100ratings.github.io/google2/insulto/veado/01.jpg",  caption: "veado, cervo, animal, natureza, wild" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/02.jpg",   caption: "cervo, animal, pet, sweet, natureza" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/03.jpg",    caption: "veado, cervídeo, animal, wild, cute" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/04.jpg",    caption: "animal, cervo, natureza, fofura, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/05.jpg",      caption: "cervo, animal, natural, sweet, calm" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/06.jpg",  caption: "veado, fofura, natureza, cervo, wild" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/07.jpg",  caption: "cervo, wild, cute, natureza, sweet" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/08.jpg",     caption: "animal, veado, cervo, wild, nature" },
+    { src: "https://100ratings.github.io/google2/insulto/veado/09.jpg",    caption: "cervo, animal, sweet, wild, calm" }
   ],
   gata: [
-    { src: "https://100ratings.github.io/google/insulto/gata/01.jpg",   caption: "gata, felina, pet, animal, fofura" },
-    { src: "https://100ratings.github.io/google/insulto/gata/02.jpg",    caption: "gato, felino, brincar, carinho, pet" },
-    { src: "https://100ratings.github.io/google/insulto/gata/03.jpg",     caption: "gatinha, felina, animal, doce, cute" },
-    { src: "https://100ratings.github.io/google/insulto/gata/04.jpg",     caption: "gato, pet, fofura, felino, miado" },
-    { src: "https://100ratings.github.io/google/insulto/gata/05.jpg",       caption: "gatinho, animal, amor, carinho, pet" },
-    { src: "https://100ratings.github.io/google/insulto/gata/06.jpg",   caption: "felina, fofura, gato, pet, brincar" },
-    { src: "https://100ratings.github.io/google/insulto/gata/07.jpg",   caption: "cat, cute, feline, pet, sweet, love" },
-    { src: "https://100ratings.github.io/google/insulto/gata/08.jpg",      caption: "felino, pet, animal, cute, adorable" },
-    { src: "https://100ratings.github.io/google/insulto/gata/09.jpg",     caption: "gato, animal, fofura, carinho, pet" }
+    { src: "https://100ratings.github.io/google2/insulto/gata/01.jpg",   caption: "gata, felina, pet, animal, fofura" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/02.jpg",    caption: "gato, felino, brincar, carinho, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/03.jpg",     caption: "gatinha, felina, animal, doce, cute" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/04.jpg",     caption: "gato, pet, fofura, felino, miado" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/05.jpg",       caption: "gatinho, animal, amor, carinho, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/06.jpg",   caption: "felina, fofura, gato, pet, brincar" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/07.jpg",   caption: "cat, cute, feline, pet, sweet, love" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/08.jpg",      caption: "felino, pet, animal, cute, adorable" },
+    { src: "https://100ratings.github.io/google2/insulto/gata/09.jpg",     caption: "gato, animal, fofura, carinho, pet" }
   ],
   vaca: [
-    { src: "https://100ratings.github.io/google/insulto/vaca/01.jpg",   caption: "vaca, bovina, animal, pet, fofura" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/02.jpg",    caption: "bovino, doce, animal, cute, gentle" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/03.jpg",     caption: "vaca, gado, animal, calm, sweet" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/04.jpg",     caption: "bovina, pet, animal, wild, love" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/05.jpg",       caption: "animal, vaca, gentle, cute, pet" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/06.jpg",   caption: "vaca, fofura, bovina, sweet, love" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/07.jpg",   caption: "cow, cute, pet, sweet, gentle" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/08.jpg",      caption: "animal, vaca, pet, bovina, calm" },
-    { src: "https://100ratings.github.io/google/insulto/vaca/09.jpg",     caption: "vaca, animal, sweet, pet, love" }
+    { src: "https://100ratings.github.io/google2/insulto/vaca/01.jpg",   caption: "vaca, bovina, animal, pet, fofura" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/02.jpg",    caption: "bovino, doce, animal, cute, gentle" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/03.jpg",     caption: "vaca, gado, animal, calm, sweet" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/04.jpg",     caption: "bovina, pet, animal, wild, love" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/05.jpg",       caption: "animal, vaca, gentle, cute, pet" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/06.jpg",   caption: "vaca, fofura, bovina, sweet, love" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/07.jpg",   caption: "cow, cute, pet, sweet, gentle" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/08.jpg",      caption: "animal, vaca, pet, bovina, calm" },
+    { src: "https://100ratings.github.io/google2/insulto/vaca/09.jpg",     caption: "vaca, animal, sweet, pet, love" }
   ]
 };
 
@@ -555,6 +555,21 @@ function bindBtnImagens() {
   });
 }
 
+/* ===== Evita que os links do menu adicionem "#" ao histórico ===== */
+function disableMenuHashLinks() {
+  // seleciona todos os links do menu (classe usada no HTML: .NZmxZe)
+  document.querySelectorAll('.NZmxZe').forEach(a => {
+    // deixa passar os dois botões que já têm handlers próprios
+    if (a.id === 'btn-tudo' || a.id === 'btn-imagens') return;
+
+    // previne default (não altera URL nem empurra estado no histórico)
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+  });
+}
+
 /* ---------- Inicialização ---------- */
 function init(){
   specImg = document.querySelector('#spec-pic');
@@ -562,11 +577,7 @@ function init(){
   bindSendButton();
   bindBtnTudo();     // ativa o "Tudo"
   bindBtnImagens();  // ativa o "Imagens"
+  disableMenuHashLinks(); // 👈 evita o "#" do histórico
 }
 
 window.addEventListener('load', init, false);
-
-
-
-
-

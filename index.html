@@ -180,8 +180,58 @@
 </div>
 
   <script src="script.js?3" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
+<script>
+  const noSleep = new NoSleep();
+  let noSleepAtivado = false;
+
+  function ativarNoSleep() {
+    try {
+      noSleep.enable();
+      noSleepAtivado = true;
+      console.log("✅ NoSleep ativado");
+    } catch (err) {
+      console.warn("⚠️ Falha ao ativar NoSleep:", err);
+    }
+  }
+
+  function reativarNoSleep() {
+    if (noSleepAtivado) {
+      noSleep.disable();
+      noSleep.enable();
+      console.log("♻️ NoSleep reativado");
+    }
+  }
+
+  // Tenta ativar em qualquer tipo de interação
+  ["click", "touchstart", "pointerdown", "keydown"].forEach(evt => {
+    document.addEventListener(evt, ativarNoSleep, { once: true });
+  });
+
+  // Reativa quando volta do background ou troca de aba
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      reativarNoSleep();
+    }
+  });
+
+  // Em alguns navegadores o vídeo interno do NoSleep pausa
+  setInterval(() => {
+    if (noSleepAtivado && typeof noSleep._video !== "undefined") {
+      const v = noSleep._video;
+      if (v.paused) {
+        console.log("🔄 Reiniciando vídeo do NoSleep");
+        reativarNoSleep();
+      }
+    }
+  }, 10000);
+</script>
+
 </body>
 </html>
+
+
+
 
 
 

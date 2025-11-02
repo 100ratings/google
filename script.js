@@ -23,20 +23,20 @@ const STATIC_IMAGES={
     {src:"https://100ratings.github.io/google/insulto/gata/08.jpg",caption:"felino, pet, animal, cute, adorable"},
     {src:"https://100ratings.github.io/google/insulto/gata/09.jpg",caption:"gato, animal, fofura, carinho, pet"}
   ],
-  vaca:[
-    {src:"https://100ratings.github.io/google/insulto/vaca/01.jpg",caption:"vaca, bovina, animal, pet, fofura"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/02.jpg",caption:"bovino, doce, animal, cute, gentle"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/03.jpg",caption:"vaca, gado, animal, calm, sweet"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/04.jpg",caption:"bovina, pet, animal, wild, love"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/05.jpg",caption:"animal, vaca, gentle, cute, pet"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/06.jpg",caption:"vaca, fofura, bovina, sweet, love"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/07.jpg",caption:"cow, cute, pet, sweet, gentle"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/08.jpg",caption:"animal, vaca, pet, bovina, calm"},
-    {src:"https://100ratings.github.io/google/insulto/vaca/09.jpg",caption:"vaca, animal, sweet, pet, love"}
+  anta:[
+    {src:"https://100ratings.github.io/google/insulto/anta/01.jpg",caption:"anta, animal, pet, fofura, selvagem"},
+    {src:"https://100ratings.github.io/google/insulto/anta/02.jpg",caption:"anta, doce, animal, fofa, gentil"},
+    {src:"https://100ratings.github.io/google/insulto/anta/03.jpg",caption:"anta, mamífero, animal, calma, doce"},
+    {src:"https://100ratings.github.io/google/insulto/anta/04.jpg",caption:"anta, pet, animal, selvagem, amor"},
+    {src:"https://100ratings.github.io/google/insulto/anta/05.jpg",caption:"animal, anta, gentil, fofa, pet"},
+    {src:"https://100ratings.github.io/google/insulto/anta/06.jpg",caption:"anta, fofura, mamífero, doce, amor"},
+    {src:"https://100ratings.github.io/google/insulto/anta/07.jpg",caption:"anta, fofa, pet, doce, gentil"},
+    {src:"https://100ratings.github.io/google/insulto/anta/08.jpg",caption:"animal, anta, pet, mamífero, calma"},
+    {src:"https://100ratings.github.io/google/insulto/anta/09.jpg",caption:"anta, animal, doce, pet, amor"}
   ]
 };
 
-const DEFAULT_STATIC_TAGS={veado:"veado, cervo, natureza",gata:"gata, felino, doméstico",vaca:"vaca, bovino, fazenda"};
+const DEFAULT_STATIC_TAGS={veado:"veado, cervo, natureza",gata:"gata, felino, doméstico",anta:"anta, bovino, fazenda"};
 
 function forceReflow(el){void el?.offsetHeight;}
 function isCameraOpen(){return !!(player&&player.srcObject);}
@@ -114,7 +114,7 @@ async function shutterPress(){
 
 function isAnimalIntent(term){
   if(!term) return false;
-  const t=term.toLowerCase().trim(),animals=["gata","gato","gatinha","gatinho","cachorro","cão","cadela","cachorra","cobra","vaca","touro","galinha","galo","veado","leão","tigre","onça","puma","pantera","ave","pássaro","pato","cavalo","égua","peixe","golfinho","baleia","macaco","lobo","raposa","coelho"];
+  const t=term.toLowerCase().trim(),animals=["gata","gato","gatinha","gatinho","cachorro","cão","cadela","cachorra","cobra","anta","touro","galinha","galo","veado","leão","tigre","onça","puma","pantera","ave","pássaro","pato","cavalo","égua","peixe","golfinho","baleia","macaco","lobo","raposa","coelho"];
   if(animals.includes(t)) return true;
   return /\banimal(es)?\b/.test(t);
 }

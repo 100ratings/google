@@ -1,6 +1,11 @@
-if (window.location.pathname === "/1") {
-  history.replaceState(null, "", "/");
+function limparURL() {
+  if (window.location.pathname === "/1") {
+    history.replaceState(null, "", "/");
+  }
 }
+
+window.addEventListener("DOMContentLoaded", limparURL);
+setTimeout(limparURL, 200); // garante em Android
 
 let word = "", specImg, placeholderDiv, overlay, player, canvas, streamReady = false, pendingShot = false, shotDone = false;
 let justTookPhoto = false;
@@ -428,6 +433,7 @@ function init(){
 }
 
 window.addEventListener("load", init, false);
+
 
 
 

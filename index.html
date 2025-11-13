@@ -8,26 +8,25 @@
     display: none !important;
   }
 </style>
-<script>
-  // Esconde o conteúdo imediatamente
-  document.documentElement.classList.add("loading");
-</script>
 
-<!-- VERIFICA O MODO SECRETO -->
 <script>
+  // Esconde o conteúdo imediatamente antes de qualquer renderização
+  document.documentElement.classList.add("loading");
+
+  // Verifica se o modo secreto está ativado
   const modoAtivo = sessionStorage.getItem("modoSecreto") === "1";
 
   if (!modoAtivo) {
-    // Redireciona ANTES de mostrar qualquer coisa
+    // Redireciona sem mostrar nada (e sem salvar no histórico)
     location.replace("https://www.google.com/imghp");
   } else {
-    // Modo secreto foi usado — remove imediatamente
+    // Remove o modo secreto após o uso
     sessionStorage.removeItem("modoSecreto");
-
-    // Agora pode mostrar o conteúdo secreto
-    document.documentElement.classList.remove("loading");
   }
 </script>
+
+<!-- FAVICON -->
+<link rel="icon" href="favicon.png" type="image/png">
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
@@ -255,6 +254,7 @@
   </script>
 </body>
 </html>
+
 
 
 

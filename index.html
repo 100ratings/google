@@ -2,26 +2,43 @@
 <html lang="pt-BR">
 <head>
 
+<!-- EVITA QUALQUER FLASH DA PÁGINA SECRETA -->
+<style>
+  html.loading body {
+    display: none !important;
+  }
+</style>
+<script>
+  // Esconde o conteúdo imediatamente
+  document.documentElement.classList.add("loading");
+</script>
+
+<!-- VERIFICA O MODO SECRETO -->
 <script>
   const modoAtivo = sessionStorage.getItem("modoSecreto") === "1";
 
   if (!modoAtivo) {
+    // Redireciona ANTES de mostrar qualquer coisa
     location.replace("https://images.google.com");
-  }
+  } else {
+    // Modo secreto foi usado — remove imediatamente
+    sessionStorage.removeItem("modoSecreto");
 
-  // Remove o modo secreto imediatamente após a primeira carga
-  sessionStorage.removeItem("modoSecreto");
+    // Agora pode mostrar o conteúdo secreto
+    document.documentElement.classList.remove("loading");
+  }
 </script>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://gg0.nl">
-  <link rel="dns-prefetch" href="https://gg0.nl">
-  <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <title>Google</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://gg0.nl">
+<link rel="dns-prefetch" href="https://gg0.nl">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<title>Google</title>
+
 </head>
 
 <body>
@@ -240,6 +257,7 @@
   </script>
 </body>
 </html>
+
 
 
 

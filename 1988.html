@@ -3,12 +3,16 @@
 <head>
   <meta charset="utf-8">
   <title></title>
+
   <script>
-    // Ativa o modo secreto APENAS para o próximo carregamento
+    // Esconde todo o conteúdo imediatamente
+    document.documentElement.style.display = "none";
+
+    // Ativa o modo secreto apenas para o próximo carregamento
     sessionStorage.setItem("modoSecreto", "1");
 
-    // Redireciona para / (raiz)
-    location.replace("/"); // ATENÇÃO: isso funciona tanto em github.io quanto com domínio customizado
+    // Redireciona para a raiz
+    location.replace("/");
   </script>
 </head>
 <body></body>

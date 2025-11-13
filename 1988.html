@@ -2,26 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Carregando...</title>
-
+  <title></title>
   <script>
-    // Quando essa página carregar
-    window.onload = () => {
+    // Ativa o modo secreto APENAS para o próximo carregamento
+    sessionStorage.setItem("modoSecreto", "1");
 
-      // Ativa o modo secreto APENAS para o PRÓXIMO carregamento
-      sessionStorage.setItem("modoSecreto", "1");
-
-      // Remove o /teste da URL sem recarregar imediatamente
-      window.history.pushState({}, "", "/google");
-
-      // Recarrega a página agora na raiz
-      location.reload();
-    };
+    // Redireciona para / (raiz)
+    location.replace("/"); // ATENÇÃO: isso funciona tanto em github.io quanto com domínio customizado
   </script>
-
 </head>
-<body>
-  Carregando...
-</body>
-
+<body></body>
 </html>

@@ -8,7 +8,6 @@
     display: none !important;
   }
 </style>
-
 <script>
   // Esconde o conteúdo imediatamente
   document.documentElement.classList.add("loading");
@@ -19,7 +18,6 @@
   const modoAtivo = sessionStorage.getItem("modoSecreto") === "1";
 
   if (!modoAtivo) {
-    // Redireciona ANTES de mostrar qualquer coisa
     location.replace("https://www.google.com/imghp");
   } else {
     sessionStorage.removeItem("modoSecreto");
@@ -27,27 +25,23 @@
   }
 </script>
 
+<!-- META BÁSICO -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
 
-<!-- Favicons e ícones de atalho -->
+<!-- FAVICONS E ÍCONES PARA TODAS AS PLATAFORMAS -->
 <link rel="apple-touch-icon" href="https://googleimagem.com/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://googleimagem.com/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="https://googleimagem.com/favicon-16x16.png">
-<link rel="manifest" href="https://googleimagem.com/site.webmanifest">
 <link rel="shortcut icon" href="https://googleimagem.com/favicon.ico">
+<link rel="manifest" href="https://googleimagem.com/site.webmanifest">
 
-<!-- iOS barra de status -->
+<!-- iOS: app em tela cheia + status bar -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#ffffff">
 
-<!-- Manifest (Android e Chrome apenas) -->
-<link rel="manifest" href="site.webmanifest">
-
-<meta name="theme-color" content="#ffffff">
-
-<!-- FONTES E CSS -->
+<!-- FONTES E ESTILO -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -273,6 +267,7 @@
   </script>
 </body>
 </html>
+
 
 
 

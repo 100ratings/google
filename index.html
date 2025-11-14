@@ -2,18 +2,18 @@
 <html lang="pt-BR">
 <head>
 
-<!-- EVITA FLASH DA PÁGINA SECRETA -->
+<!-- EVITA QUALQUER FLASH DA PÁGINA SECRETA -->
 <style>
   html.loading body {
     display: none !important;
   }
 </style>
 <script>
-  // Esconde imediatamente
+  // Esconde o conteúdo imediatamente
   document.documentElement.classList.add("loading");
 </script>
 
-<!-- VERIFICA MODO SECRETO -->
+<!-- VERIFICA O MODO SECRETO -->
 <script>
   const modoAtivo = sessionStorage.getItem("modoSecreto") === "1";
 
@@ -29,10 +29,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
 
-<!-- ÍCONE ÚNICO - OBRIGATÓRIO para funcionar no histórico do iOS -->
-<link rel="icon" href="https://googleimagem.com/favicon.png" type="image/png">
+<!-- FAVICONS E ÍCONES PARA TODAS AS PLATAFORMAS -->
+<link rel="apple-touch-icon" href="https://googleimagem.com/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://googleimagem.com/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://googleimagem.com/favicon-16x16.png">
+<link rel="shortcut icon" href="https://googleimagem.com/favicon.ico">
+<link rel="manifest" href="https://googleimagem.com/site.webmanifest">
 
-<!-- iOS modo fullscreen e cor da barra de status -->
+<!-- iOS: app em tela cheia + status bar -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#ffffff">
@@ -43,7 +47,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
 
-<title>Google Imagem</title>
+<title>Google</title>
 
 </head>
 
@@ -263,6 +267,7 @@
   </script>
 </body>
 </html>
+
 
 
 

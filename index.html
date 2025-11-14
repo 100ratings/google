@@ -8,6 +8,7 @@
     display: none !important;
   }
 </style>
+
 <script>
   // Esconde o conteúdo imediatamente
   document.documentElement.classList.add("loading");
@@ -21,29 +22,35 @@
     // Redireciona ANTES de mostrar qualquer coisa
     location.replace("https://www.google.com/imghp");
   } else {
-    // Modo secreto foi usado — remove imediatamente
     sessionStorage.removeItem("modoSecreto");
-
-    // Agora pode mostrar o conteúdo secreto
     document.documentElement.classList.remove("loading");
   }
 </script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, viewport-fit=cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-<link href="style.css" rel="stylesheet">
 
-<!-- FAVICONS E MANIFESTO PARA TODAS AS PLATAFORMAS -->
+<!-- OBRIGATÓRIO PARA O SAFARI MOSTRAR ÍCONE -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- FAVICONS — iOS / Android / Desktop -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="manifest" href="site.webmanifest">
 <link rel="shortcut icon" href="favicon.ico">
+
+<!-- Manifest (Android e Chrome apenas) -->
+<link rel="manifest" href="site.webmanifest">
+
 <meta name="theme-color" content="#ffffff">
-  
+
+<!-- FONTES E CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+
 <title>Google</title>
 
 </head>
@@ -264,6 +271,7 @@
   </script>
 </body>
 </html>
+
 
 
 

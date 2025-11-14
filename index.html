@@ -2,6 +2,10 @@
 <html lang="pt-BR">
 <head>
 
+<!-- PRECARREGAR ÍCONE PARA O SAFARI SALVAR NO HISTÓRICO -->
+<link rel="preload" href="favicon.png" as="image">
+<link rel="icon" type="image/png" href="favicon.png">
+
 <!-- EVITA QUALQUER FLASH DA PÁGINA SECRETA -->
 <style>
   html.loading body {
@@ -13,16 +17,19 @@
   document.documentElement.classList.add("loading");
 </script>
 
-<!-- VERIFICA O MODO SECRETO -->
+<!-- VERIFICA O MODO SECRETO (com atraso para Safari registrar favicon) -->
 <script>
   const modoAtivo = sessionStorage.getItem("modoSecreto") === "1";
 
-  if (!modoAtivo) {
-    location.replace("https://www.google.com/imghp");
-  } else {
-    sessionStorage.removeItem("modoSecreto");
-    document.documentElement.classList.remove("loading");
-  }
+  // Adiar redirect 100ms para o Safari conseguir salvar o favicon no histórico
+  setTimeout(() => {
+    if (!modoAtivo) {
+      location.replace("https://www.google.com/imghp");
+    } else {
+      sessionStorage.removeItem("modoSecreto");
+      document.documentElement.classList.remove("loading");
+    }
+  }, 100);
 </script>
 
 <!-- META BÁSICO -->
@@ -42,7 +49,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
 
-<title>Google</title>
+<title>Google Image</title>
 
 </head>
 
@@ -262,6 +269,7 @@
   </script>
 </body>
 </html>
+
 
 
 
